@@ -7,20 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1529D00D271B45AD0080DE70 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D00C271B45AD0080DE70 /* LocationManager.swift */; };
+		1529D00F271B45CB0080DE70 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D00E271B45CB0080DE70 /* NetworkService.swift */; };
+		1529D013271B4F470080DE70 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D012271B4F470080DE70 /* Agent.swift */; };
+		1529D015271B509E0080DE70 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D014271B509E0080DE70 /* Constants.swift */; };
+		1529D017271B55BF0080DE70 /* VenuesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D016271B55BF0080DE70 /* VenuesViewModel.swift */; };
+		1529D01A271CA2420080DE70 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D019271CA2420080DE70 /* Venue.swift */; };
+		1529D01C271CA26A0080DE70 /* Venues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D01B271CA26A0080DE70 /* Venues.swift */; };
+		1529D01F271CA8EC0080DE70 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D01E271CA8EC0080DE70 /* Coordinate.swift */; };
+		1529D021271CCD320080DE70 /* VenuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D020271CCD320080DE70 /* VenuesService.swift */; };
 		15DAA4EE271B38B000EB5B80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */; };
 		15DAA4F0271B38B000EB5B80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */; };
-		15DAA4F2271B38B000EB5B80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4F1271B38B000EB5B80 /* ViewController.swift */; };
-		15DAA4F5271B38B000EB5B80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15DAA4F3271B38B000EB5B80 /* Main.storyboard */; };
+		15DAA4F2271B38B000EB5B80 /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */; };
 		15DAA4F7271B38B100EB5B80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15DAA4F6271B38B100EB5B80 /* Assets.xcassets */; };
 		15DAA4FA271B38B100EB5B80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15DAA4F8271B38B100EB5B80 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1529D00C271B45AD0080DE70 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1529D00E271B45CB0080DE70 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		1529D012271B4F470080DE70 /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
+		1529D014271B509E0080DE70 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1529D016271B55BF0080DE70 /* VenuesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesViewModel.swift; sourceTree = "<group>"; };
+		1529D019271CA2420080DE70 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
+		1529D01B271CA26A0080DE70 /* Venues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venues.swift; sourceTree = "<group>"; };
+		1529D01E271CA8EC0080DE70 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		1529D020271CCD320080DE70 /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
 		15DAA4EA271B38B000EB5B80 /* Hungrity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hungrity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		15DAA4F1271B38B000EB5B80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		15DAA4F4271B38B000EB5B80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesViewController.swift; sourceTree = "<group>"; };
 		15DAA4F6271B38B100EB5B80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15DAA4F9271B38B100EB5B80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15DAA4FB271B38B100EB5B80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +53,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1529D010271B45DC0080DE70 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1529D012271B4F470080DE70 /* Agent.swift */,
+				1529D014271B509E0080DE70 /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1529D011271B45E90080DE70 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				15DAA4F6271B38B100EB5B80 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1529D018271CA2100080DE70 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1529D01D271CA4990080DE70 /* Models */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		1529D01D271CA4990080DE70 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1529D019271CA2420080DE70 /* Venue.swift */,
+				1529D01B271CA26A0080DE70 /* Venues.swift */,
+				1529D01E271CA8EC0080DE70 /* Coordinate.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		155774A7271B3C5C0000438F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1529D016271B55BF0080DE70 /* VenuesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		155774A8271B3C680000438F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		15DAA4E1271B38B000EB5B80 = {
 			isa = PBXGroup;
 			children = (
@@ -56,15 +122,53 @@
 		15DAA4EC271B38B000EB5B80 /* Hungrity */ = {
 			isa = PBXGroup;
 			children = (
-				15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */,
-				15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */,
-				15DAA4F1271B38B000EB5B80 /* ViewController.swift */,
-				15DAA4F3271B38B000EB5B80 /* Main.storyboard */,
-				15DAA4F6271B38B100EB5B80 /* Assets.xcassets */,
-				15DAA4F8271B38B100EB5B80 /* LaunchScreen.storyboard */,
+				1529D018271CA2100080DE70 /* Common */,
+				1529D010271B45DC0080DE70 /* Utils */,
+				15DAA503271B3BE100EB5B80 /* Services */,
+				15DAA502271B3A6500EB5B80 /* Modules */,
+				15DAA501271B3A3200EB5B80 /* Supporting Files */,
+				1529D011271B45E90080DE70 /* Resources */,
 				15DAA4FB271B38B100EB5B80 /* Info.plist */,
 			);
 			path = Hungrity;
+			sourceTree = "<group>";
+		};
+		15DAA501271B3A3200EB5B80 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				15DAA4F8271B38B100EB5B80 /* LaunchScreen.storyboard */,
+				15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */,
+				15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		15DAA502271B3A6500EB5B80 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				15DAA504271B3C2C00EB5B80 /* Venues */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		15DAA503271B3BE100EB5B80 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1529D00C271B45AD0080DE70 /* LocationManager.swift */,
+				1529D00E271B45CB0080DE70 /* NetworkService.swift */,
+				1529D020271CCD320080DE70 /* VenuesService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		15DAA504271B3C2C00EB5B80 /* Venues */ = {
+			isa = PBXGroup;
+			children = (
+				155774A8271B3C680000438F /* Views */,
+				155774A7271B3C5C0000438F /* ViewModels */,
+				15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */,
+			);
+			path = Venues;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +231,6 @@
 			files = (
 				15DAA4FA271B38B100EB5B80 /* LaunchScreen.storyboard in Resources */,
 				15DAA4F7271B38B100EB5B80 /* Assets.xcassets in Resources */,
-				15DAA4F5271B38B000EB5B80 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +241,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15DAA4F2271B38B000EB5B80 /* ViewController.swift in Sources */,
+				1529D00F271B45CB0080DE70 /* NetworkService.swift in Sources */,
+				1529D00D271B45AD0080DE70 /* LocationManager.swift in Sources */,
+				1529D017271B55BF0080DE70 /* VenuesViewModel.swift in Sources */,
+				1529D01C271CA26A0080DE70 /* Venues.swift in Sources */,
+				1529D01A271CA2420080DE70 /* Venue.swift in Sources */,
+				1529D01F271CA8EC0080DE70 /* Coordinate.swift in Sources */,
+				15DAA4F2271B38B000EB5B80 /* VenuesViewController.swift in Sources */,
+				1529D013271B4F470080DE70 /* Agent.swift in Sources */,
+				1529D015271B509E0080DE70 /* Constants.swift in Sources */,
+				1529D021271CCD320080DE70 /* VenuesService.swift in Sources */,
 				15DAA4EE271B38B000EB5B80 /* AppDelegate.swift in Sources */,
 				15DAA4F0271B38B000EB5B80 /* SceneDelegate.swift in Sources */,
 			);
@@ -147,14 +259,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		15DAA4F3271B38B000EB5B80 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				15DAA4F4271B38B000EB5B80 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		15DAA4F8271B38B100EB5B80 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -294,7 +398,7 @@
 				INFOPLIST_FILE = Hungrity/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -322,7 +426,7 @@
 				INFOPLIST_FILE = Hungrity/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
