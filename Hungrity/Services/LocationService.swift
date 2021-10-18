@@ -15,7 +15,7 @@ protocol LocationServiceDelegate: AnyObject {
 protocol LocationServiceProtocol: CLLocationManagerDelegate {
     var delegate: LocationServiceDelegate? { get set }
 
-    func start()
+    func getLocation()
 }
 
 class LocationService: NSObject, LocationServiceProtocol {
@@ -35,16 +35,12 @@ class LocationService: NSObject, LocationServiceProtocol {
         super.init()
         locationManager.delegate = self
     }
-    
-    @objc private func getLocation() {
-        startWhileUsingApp()
-    }
 
-    func start() {
-        startWhileUsingApp()
+    func getLocation() {
+        getLocationWhileUsingApp()
     }
     
-    func startWhileUsingApp() {
+    func getLocationWhileUsingApp() {
         if currentCoordinate != nil {
             currentCoordinate = nil
         }
@@ -63,8 +59,10 @@ class LocationService: NSObject, LocationServiceProtocol {
             let longitude = location.coordinate.longitude
 
             if currentCoordinate == nil {
+                print("LOCATION SERVICE - Location Has Been Updated")
                 currentCoordinate = Coordinate(latitude: latitude, longitude: longitude)
             } else {
+                print("LOCATION SERVICE - Stoped Updating Location")
                 locationManager.stopUpdatingLocation()
             }
         }

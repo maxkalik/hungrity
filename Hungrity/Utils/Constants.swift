@@ -11,3 +11,8 @@ struct Constants {
     static let basehost = "restaurant-api.wolt.fi"
     static let basepath = "/v3/venues"
 }
+
+struct Configuration {
+    static let refreshDeadlineSeconds: Double = 2
+    static let maxVenuesItems = 15
+}

@@ -7,10 +7,6 @@
 
 import Foundation
 
-extension KeyedEncodingContainer {
-    
-}
-
 struct Venue: Decodable {
     let id: String
     let address: String?
@@ -18,6 +14,7 @@ struct Venue: Decodable {
     let description: String?
     let shortDescription: String?
     let listimage: String?
+    let favourite: Bool
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -27,6 +24,7 @@ struct Venue: Decodable {
         self.description = try container.decode([ValueModel].self, forKey: .description).filter { $0.lang == "EN" }.first?.value
         self.shortDescription = try container.decode([ValueModel].self, forKey: .shortDescription).filter { $0.lang == "EN" }.first?.value
         self.listimage = try container.decode(String.self, forKey: .listimage)
+        self.favourite = try container.decode(Bool.self, forKey: .favourite)
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -36,6 +34,7 @@ struct Venue: Decodable {
         case description
         case shortDescription = "short_description"
         case listimage
+        case favourite
     }
     
     private struct ValueModel: Decodable {
