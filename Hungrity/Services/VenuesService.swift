@@ -1,81 +1,83 @@
 //
-//  VenueService.swift
+//  NetworkService.swift
 //  Hungrity
 //
-//  Created by Maksim Kalik on 10/18/21.
+//  Created by Maksim Kalik on 10/16/21.
 //
 
 import Foundation
 import Combine
 
 enum ServiceError: Error {
-    case url(URLError)
-    case urlRequest
-    case decode
+    case sessionFailed(error: URLError)
+    case decodingFailed
+    case invalidEndpoint
+    case other(Error)
     case server
 }
 
-protocol VenuesService {
-    typealias Coordinates = [Query : String]
-    func getVenues(by coordinates: Coordinates) -> AnyPublisher<[Venue], Error>
+enum Query: String {
+    case latitude = "lat"
+    case longitude = "lon"
 }
 
-final class VenuesServiceImplementation: VenuesService {
-    func getVenues(by coordinates: Coordinates) -> AnyPublisher<[Venue], Error> {
-//        var dataTask: URLSessionDataTask?
-//
-//        let onSubscription: (Subscription) -> Void = { _ in dataTask?.resume() }
-//        let onCancel: () -> Void = { dataTask?.cancel() }
+protocol VenuesServiceProtocol {
+    typealias Coordinates = [Query : String]
+    func fetchVenues(by coordinates: Coordinates) -> AnyPublisher<[Venue], ServiceError>
+}
+
+final class VenuesService: VenuesServiceProtocol {
+    let networkService = NetworkService()
+
+    func fetchData<Output: Decodable>(from request: URLRequest?) -> AnyPublisher<Output, ServiceError> {
         
-        guard let urlRequest = getUrlRequest(with: coordinates) else {
-            return Fail(error: ServiceError.urlRequest).eraseToAnyPublisher()
+        guard let request = request else {
+            return Fail(error: ServiceError.invalidEndpoint).eraseToAnyPublisher()
         }
         
-        print(urlRequest)
-        
-        return URLSession.shared
-            .dataTaskPublisher(for: urlRequest)
-            .tryMap { data, response in
-                print("*****", response)
-                let value = try JSONDecoder().decode(Venues.self, from: data)
-                return value.results ?? []
-            }
-            .receive(on: RunLoop.main)
+        return networkService
+            .run(request)
+            .map(\.value)
+            .mapError({ error in
+                switch error {
+                case is Swift.DecodingError:
+                    print("=== decoding failed")
+                    return .decodingFailed
+                case let urlError as URLError:
+                    print("=== url error: \(urlError.localizedDescription)")
+                    return .sessionFailed(error: urlError)
+                default:
+                    print("=== other error: \(error.localizedDescription)")
+                    return .other(error)
+                }
+            })
             .eraseToAnyPublisher()
-
-//        return Future<[Venue], Error> { [weak self] promise in
-//            guard let urlRequest = self?.getUrlRequest(with: coordinates) else {
-//                promise(.failure(ServiceError.urlRequest))
-//                return
-//            }
-//
-//            dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-//                print(urlRequest)
-//                guard let data = data else {
-//                    if let error = error { promise(.failure(error)) }
-//                    return
-//                }
-//                do {
-//                    let venues = try JSONDecoder().decode(Venues.self, from: data)
-//                    switch venues.status {
-//                    case .failed: promise(.failure(ServiceError.server))
-//                    case .success: promise(.success(venues.results ?? []))
-//                    }
-//                } catch {
-//                    promise(.failure(ServiceError.decode))
-//                }
-//            }
-//        }
-//        .handleEvents(receiveSubscription: onSubscription, receiveCancel: onCancel)
-//        .receive(on: DispatchQueue.main)
-//        .eraseToAnyPublisher()
     }
-    
-    private func getUrlRequest(with queries: Coordinates) -> URLRequest? {
+}
+
+extension VenuesService {
+    func fetchVenues(by coordinates: Coordinates) -> AnyPublisher<[Venue], ServiceError> {
+        let request = prepareRequest(with: coordinates)
+        let venuesPublisher: AnyPublisher<Venues, ServiceError> = fetchData(from: request)
+        return venuesPublisher
+            .tryMap { try self.transformVenues($0) }
+            .map { $0.results ?? [] }
+            .mapError { $0 as? ServiceError ?? ServiceError.other($0) }
+            .eraseToAnyPublisher()
+    }
+
+    private func transformVenues(_ venues: Venues) throws -> Venues {
+        switch venues.status {
+        case .failed: throw ServiceError.server
+        case .success: return venues
+        }
+    }
+
+    private func prepareRequest(with queries: Coordinates) -> URLRequest? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "restaurant-api.wolt.fi"
-        components.path = "/v3/venues"
+        components.host = Constants.basehost
+        components.path = Constants.basepath
         components.queryItems = queries.map { URLQueryItem(name: $0.key.rawValue, value: $0.value) }
 
         guard let url = components.url else { return nil }

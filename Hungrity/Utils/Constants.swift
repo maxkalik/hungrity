@@ -8,5 +8,6 @@
 import Foundation
 
 struct Constants {
-    static let baseUrl = "https://restaurant-api.wolt.fi/v3/venues"
+    static let basehost = "restaurant-api.wolt.fi"
+    static let basepath = "/v3/venues"
 }

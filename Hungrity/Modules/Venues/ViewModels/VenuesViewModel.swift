@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
 enum ListViewModelState {
     case loading
@@ -17,44 +18,29 @@ enum ListViewModelState {
 final class VenuesViewModel {
     @Published private(set) var venues = [Venue]()
     @Published private(set) var state: ListViewModelState = .loading
-    
+
+    private var dependencies: Dependencies
     private var cancellable: AnyCancellable?
     
-//    private let venuesService: VenuesService = VenuesServiceImplementation()
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
+    }
 
     func viewDidLoad() {
-        print("view did load")
         fetchVenues()
+        dependencies.locationService.start()
     }
     
     func fetchVenues() {
-        
-//        let receiveCompletionHandler: (Subscribers.Completion<Error>) -> Void = { [weak self] completion in
-//            switch completion {
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                self?.state = .error(error)
-//            case .finished: self?.state = .finishedLoading
-//            }
-//        }
-//
-//        let receiveValueHandler: ([Venue]) -> Void = { [weak self] venues in
-//            print(venues)
-//            self?.venues = venues
-//        }
-//
-//        cancellable = venuesService
-//            .getVenues(by: [.latitude: "60.170187", .longitude: "24.930599"])
-//            .sink(receiveCompletion: receiveCompletionHandler, receiveValue: receiveValueHandler)
-        
-        cancellable = NetworkService
-            .fetchVenues(with: [.latitude: "60.170187", .longitude: "24.930599"])
-            .catch { [self] failureReason -> Just<Venues> in
-                return Just(Venues(results: [], status: .failed))
+
+        cancellable = dependencies.venuesService
+            .fetchVenues(by: [.latitude: "60.170187", .longitude: "24.930599"])
+            .catch { [self] error -> Just<[Venue]> in
+                return Just([])
             }
             .sink(receiveCompletion: {_ in }, receiveValue: { [self] venues in
-                self.venues = venues.results ?? []
-                print(venues)
+                self.venues = venues
+                print(venues.first)
             })
     }
 }

@@ -7,32 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1529D00D271B45AD0080DE70 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D00C271B45AD0080DE70 /* LocationManager.swift */; };
-		1529D00F271B45CB0080DE70 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D00E271B45CB0080DE70 /* NetworkService.swift */; };
-		1529D013271B4F470080DE70 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D012271B4F470080DE70 /* Agent.swift */; };
+		1529D00D271B45AD0080DE70 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D00C271B45AD0080DE70 /* LocationService.swift */; };
+		1529D00F271B45CB0080DE70 /* VenuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D00E271B45CB0080DE70 /* VenuesService.swift */; };
+		1529D013271B4F470080DE70 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D012271B4F470080DE70 /* NetworkService.swift */; };
 		1529D015271B509E0080DE70 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D014271B509E0080DE70 /* Constants.swift */; };
 		1529D017271B55BF0080DE70 /* VenuesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D016271B55BF0080DE70 /* VenuesViewModel.swift */; };
 		1529D01A271CA2420080DE70 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D019271CA2420080DE70 /* Venue.swift */; };
 		1529D01C271CA26A0080DE70 /* Venues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D01B271CA26A0080DE70 /* Venues.swift */; };
 		1529D01F271CA8EC0080DE70 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D01E271CA8EC0080DE70 /* Coordinate.swift */; };
-		1529D021271CCD320080DE70 /* VenuesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529D020271CCD320080DE70 /* VenuesService.swift */; };
 		15DAA4EE271B38B000EB5B80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */; };
 		15DAA4F0271B38B000EB5B80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */; };
 		15DAA4F2271B38B000EB5B80 /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */; };
 		15DAA4F7271B38B100EB5B80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15DAA4F6271B38B100EB5B80 /* Assets.xcassets */; };
 		15DAA4FA271B38B100EB5B80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15DAA4F8271B38B100EB5B80 /* LaunchScreen.storyboard */; };
+		15E7A53F271D76DF00E64239 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7A53E271D76DF00E64239 /* Dependencies.swift */; };
+		15E7A542271D771B00E64239 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7A541271D771B00E64239 /* AppCoordinator.swift */; };
+		15E7A544271D778600E64239 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7A543271D778600E64239 /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1529D00C271B45AD0080DE70 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		1529D00E271B45CB0080DE70 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		1529D012271B4F470080DE70 /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
+		1529D00C271B45AD0080DE70 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		1529D00E271B45CB0080DE70 /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
+		1529D012271B4F470080DE70 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		1529D014271B509E0080DE70 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1529D016271B55BF0080DE70 /* VenuesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesViewModel.swift; sourceTree = "<group>"; };
 		1529D019271CA2420080DE70 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 		1529D01B271CA26A0080DE70 /* Venues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venues.swift; sourceTree = "<group>"; };
 		1529D01E271CA8EC0080DE70 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
-		1529D020271CCD320080DE70 /* VenuesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuesService.swift; sourceTree = "<group>"; };
 		15DAA4EA271B38B000EB5B80 /* Hungrity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hungrity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +41,9 @@
 		15DAA4F6271B38B100EB5B80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15DAA4F9271B38B100EB5B80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15DAA4FB271B38B100EB5B80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15E7A53E271D76DF00E64239 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		15E7A541271D771B00E64239 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		15E7A543271D778600E64239 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +60,6 @@
 		1529D010271B45DC0080DE70 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				1529D012271B4F470080DE70 /* Agent.swift */,
 				1529D014271B509E0080DE70 /* Constants.swift */,
 			);
 			path = Utils;
@@ -73,6 +76,7 @@
 		1529D018271CA2100080DE70 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				15E7A53D271D76CF00E64239 /* Protocols */,
 				1529D01D271CA4990080DE70 /* Models */,
 			);
 			path = Common;
@@ -122,6 +126,7 @@
 		15DAA4EC271B38B000EB5B80 /* Hungrity */ = {
 			isa = PBXGroup;
 			children = (
+				15E7A540271D76F200E64239 /* Coordinator */,
 				1529D018271CA2100080DE70 /* Common */,
 				1529D010271B45DC0080DE70 /* Utils */,
 				15DAA503271B3BE100EB5B80 /* Services */,
@@ -146,6 +151,7 @@
 		15DAA502271B3A6500EB5B80 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				15E7A53C271D76BB00E64239 /* _shared */,
 				15DAA504271B3C2C00EB5B80 /* Venues */,
 			);
 			path = Modules;
@@ -154,9 +160,9 @@
 		15DAA503271B3BE100EB5B80 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1529D00C271B45AD0080DE70 /* LocationManager.swift */,
-				1529D00E271B45CB0080DE70 /* NetworkService.swift */,
-				1529D020271CCD320080DE70 /* VenuesService.swift */,
+				1529D012271B4F470080DE70 /* NetworkService.swift */,
+				1529D00C271B45AD0080DE70 /* LocationService.swift */,
+				1529D00E271B45CB0080DE70 /* VenuesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -169,6 +175,30 @@
 				15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */,
 			);
 			path = Venues;
+			sourceTree = "<group>";
+		};
+		15E7A53C271D76BB00E64239 /* _shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = _shared;
+			sourceTree = "<group>";
+		};
+		15E7A53D271D76CF00E64239 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				15E7A53E271D76DF00E64239 /* Dependencies.swift */,
+				15E7A543271D778600E64239 /* Coordinator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		15E7A540271D76F200E64239 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				15E7A541271D771B00E64239 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,16 +271,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1529D00F271B45CB0080DE70 /* NetworkService.swift in Sources */,
-				1529D00D271B45AD0080DE70 /* LocationManager.swift in Sources */,
+				15E7A53F271D76DF00E64239 /* Dependencies.swift in Sources */,
+				1529D00F271B45CB0080DE70 /* VenuesService.swift in Sources */,
+				1529D00D271B45AD0080DE70 /* LocationService.swift in Sources */,
 				1529D017271B55BF0080DE70 /* VenuesViewModel.swift in Sources */,
 				1529D01C271CA26A0080DE70 /* Venues.swift in Sources */,
 				1529D01A271CA2420080DE70 /* Venue.swift in Sources */,
+				15E7A544271D778600E64239 /* Coordinator.swift in Sources */,
 				1529D01F271CA8EC0080DE70 /* Coordinate.swift in Sources */,
 				15DAA4F2271B38B000EB5B80 /* VenuesViewController.swift in Sources */,
-				1529D013271B4F470080DE70 /* Agent.swift in Sources */,
+				1529D013271B4F470080DE70 /* NetworkService.swift in Sources */,
 				1529D015271B509E0080DE70 /* Constants.swift in Sources */,
-				1529D021271CCD320080DE70 /* VenuesService.swift in Sources */,
+				15E7A542271D771B00E64239 /* AppCoordinator.swift in Sources */,
 				15DAA4EE271B38B000EB5B80 /* AppDelegate.swift in Sources */,
 				15DAA4F0271B38B000EB5B80 /* SceneDelegate.swift in Sources */,
 			);
@@ -321,7 +353,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -376,7 +408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -9,11 +9,13 @@ import UIKit
 
 class VenuesViewController: UIViewController {
 
+    private var locationManager = LocationService()
+    var viewModel: VenuesViewModel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let viewModel = VenuesViewModel()
-        viewModel.viewDidLoad()
+        view.backgroundColor = .red
+        viewModel?.viewDidLoad()
     }
 }
 
