@@ -9,7 +9,6 @@ import UIKit
 
 class VenuesViewController: UIViewController {
 
-    private var locationManager = LocationService()
     var viewModel: VenuesViewModel?
 
     override func viewDidLoad() {

@@ -19,11 +19,9 @@
 			</array>
 		</dict>
 	</dict>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Please allow to find your current location</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Please allow to find your current location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Please allow to find your current location</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>

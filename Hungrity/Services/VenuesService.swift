@@ -85,6 +85,7 @@ extension VenuesService {
         var urlRequest = URLRequest(url: url)
         urlRequest.timeoutInterval = 10.0
         urlRequest.httpMethod = "GET"
+
         return urlRequest
     }
 }

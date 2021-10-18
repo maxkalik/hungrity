@@ -15,7 +15,7 @@ protocol Dependencies:
 // MARK: - Dependencies protocols
 
 protocol HasLocation: AnyObject {
-    var locationService: LocationService { get set }
+    var locationService: LocationServiceProtocol { get set }
 }
 
 protocol HasVenues: AnyObject {
@@ -26,6 +26,6 @@ protocol HasVenues: AnyObject {
 
 final class AppDependencies: Dependencies {
 
-    lazy var locationService: LocationService = LocationService()
+    lazy var locationService: LocationServiceProtocol = LocationService()
     lazy var venuesService: VenuesServiceProtocol = VenuesService()
 }
