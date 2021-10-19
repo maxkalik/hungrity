@@ -22,7 +22,7 @@ final class AppCoordinatorImplementation: AppCoordinator {
     
     func start() {
         let viewController = VenuesViewController()
-        viewController.viewModel = VenuesViewModel(dependencies: dependencies)
+        viewController.viewModel = VenuesViewModelImplementation(dependencies: dependencies)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

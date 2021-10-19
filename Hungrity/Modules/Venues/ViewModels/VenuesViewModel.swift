@@ -16,7 +16,16 @@ enum ListViewModelState {
     case error(Error)
 }
 
-final class VenuesViewModel {
+protocol VenuesViewModel {
+    var venuesCount: Int { get }
+    var venues: [VenueCellViewModel] { get }
+    
+    func viewDidLoad()
+    func startRefreshing()
+}
+
+final class VenuesViewModelImplementation: VenuesViewModel {
+
     private var allVenues = [Venue]() {
         didSet {
             guard allVenues.isEmpty == false else { return }
@@ -34,7 +43,8 @@ final class VenuesViewModel {
     
     @Published private(set) var state: ListViewModelState = .loading
     
-    private var venues = [Venue]()
+    var venues = [VenueCellViewModel]()
+
     private var timer: Timer?
     private var dependencies: Dependencies
     private var cancellable: AnyCancellable?
@@ -51,6 +61,10 @@ final class VenuesViewModel {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    var venuesCount: Int {
+        return venues.count
     }
 
     func viewDidLoad() {
@@ -81,17 +95,21 @@ final class VenuesViewModel {
         let indexFrom = venuesCounter
         let indexTill = Configuration.maxVenuesItems + venuesCounter
 
-        if allVenues.count >= indexTill {
-            venueElements = Array(allVenues[indexFrom ..< indexTill])
+        let filteredVenues = isFavorites ? allVenues.filter { self.dependencies.localStorage.favorites.contains($0.id) } : allVenues
+        
+        if filteredVenues.count >= indexTill {
+            venueElements = Array(filteredVenues[indexFrom ..< indexTill])
             venuesCounter += Configuration.maxVenuesItems
         } else {
-            venueElements = Array(allVenues[indexFrom ..< allVenues.count])            
+            venueElements = Array(filteredVenues[indexFrom ..< filteredVenues.count])
             resetVenues()
             DispatchQueue.main.asyncAfter(deadline: .now() + Configuration.refreshDeadlineSeconds) {
                 self.dependencies.locationService.getLocation()
             }
         }
+
         print("**** \(venueElements)")
+        self.venues = venueElements.map { VenueCellViewModelImplementation(dependencies: dependencies, model: $0 )}
     }
     
     private func addFavorite(id: String) {
@@ -123,17 +141,21 @@ final class VenuesViewModel {
                 self.allVenues = venues
             })
     }
+    
+    func startRefreshing() {
+        dependencies.locationService.getLocation()
+    }
 }
 
 // MARK: - LocationServiceDelegate
 
-extension VenuesViewModel: LocationServiceDelegate {
+extension VenuesViewModelImplementation: LocationServiceDelegate {
     func didUpdateCurrentCoordinate(_ coordinate: Coordinate) {
         print("=== did update current coordinate: \(coordinate.latitude), \(coordinate.longitude)")
         fetchVenues(by: coordinate)
     }
     
     func didFailWithError(_ error: Error) {
-        print("location did failed")
+        print("=== location did failed")
     }
 }

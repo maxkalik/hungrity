@@ -30,19 +30,16 @@ final class LocalStorage: LocalStorageProtocol {
     
     func addFavorite(id: String) {
         favorites.append(id)
-        updateStorage(forkey: .favorites)
+        updateFavorites()
     }
     
     func removeFavorite(id: String) {
         guard let index = favorites.firstIndex(of: id) else { return }
         favorites.remove(at: index)
-        updateStorage(forkey: .favorites)
+        updateFavorites()
     }
     
-    private func updateStorage(forkey: StorageKeys) {
-        switch forkey {
-        case .favorites:
-            storage.set(favorites, forKey: forkey.rawValue)
-        }
+    private func updateFavorites() {
+        storage.set(favorites, forKey: StorageKeys.favorites.rawValue)
     }
 }
