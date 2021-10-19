@@ -1,9 +1,4 @@
-//
-//  ViewController.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/16/21.
-//
+//  Created by Maksim Kalik
 
 import UIKit
 
@@ -14,6 +9,22 @@ final class VenuesViewController: UIViewController {
             viewModel?.viewDelegate = self
         }
     }
+    
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .medium
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
+    
+    private var centeredMessageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.textColor = .gray
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
 
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -22,6 +33,11 @@ final class VenuesViewController: UIViewController {
         label.textColor = .gray
         label.sizeToFit()
         return label
+    }()
+    
+    private var favoritesBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem()
+        return barButtonItem
     }()
     
     private var venuesTableView: UITableView = {
@@ -42,12 +58,9 @@ final class VenuesViewController: UIViewController {
 
         setupCommon()
         setupVenuesTableView()
+        setupActivityIndicator()
         setupTitleLabel()
-    }
-    
-    @objc private func refresh(sender: UIRefreshControl) {
-        viewModel?.startRefreshing()
-        sender.endRefreshing()
+        setupRightBarButtonItem()
     }
 }
 
@@ -58,9 +71,21 @@ private extension VenuesViewController {
         // navigationController?.title = "Hungrity"
     }
     
+    private func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        setupActivityIndicatorConstrains()
+    }
+    
     private func setupTitleLabel() {
-        titleLabel.text = "Hungrity"
+        titleLabel.text = viewModel?.title
         navigationItem.titleView = titleLabel
+    }
+    
+    private func setupRightBarButtonItem() {
+        navigationItem.rightBarButtonItem = favoritesBarButtonItem
+        favoritesBarButtonItem.target = self
+        favoritesBarButtonItem.action = #selector(favoritesBarButtonItemPressed)
+        updateFavoritesBarButtonItem()
     }
     
     func setupVenuesTableView() {
@@ -72,11 +97,47 @@ private extension VenuesViewController {
         registerCell()
     }
     
+    func setupCenteredMessageLabel() {
+        let isDescendant = centeredMessageLabel.isDescendant(of: view) == true
+        if let venuesCount = viewModel?.venuesCount,
+           venuesCount > 0 {
+            if isDescendant == true {
+                centeredMessageLabel.removeFromSuperview()
+            }
+        } else {
+            if isDescendant == false {
+                venuesTableView.addSubview(centeredMessageLabel)
+                setupCenteredMessageLabelConstrains()
+            }
+        }
+    }
+    
     func registerCell() {
         venuesTableView.register(
             VenueTableViewCell.self,
             forCellReuseIdentifier: Constants.venueCellIdentifier
         )
+    }
+}
+
+// MARK: - Interactions
+
+private extension VenuesViewController {
+    
+    @objc func refresh() {
+        viewModel?.startRefreshing()
+    }
+    
+    @objc func favoritesBarButtonItemPressed() {
+        viewModel?.favoritesDidPress()
+        updateFavoritesBarButtonItem()
+        venuesTableView.reloadData()
+    }
+    
+    func updateFavoritesBarButtonItem() {
+        guard let imageName = viewModel?.favoritesButtonImageName else { return }
+        let image = UIImage(named: imageName)
+        favoritesBarButtonItem.image = image
     }
 }
 
@@ -111,12 +172,23 @@ extension VenuesViewController: UITableViewDataSource {
 
 extension VenuesViewController: VenuesViewModelViewDelegate {
     func startLoading() {
-        print("=== start loading")
+        if !refreshControl.isRefreshing {
+            activityIndicator.startAnimating()
+        }
     }
     
     func finishLoading() {
-        print("=== finish loading")
+        if refreshControl.isRefreshing {
+            refreshControl.endRefreshing()
+        } else {
+            activityIndicator.stopAnimating()
+        }
         venuesTableView.reloadData()
+    }
+    
+    func showErrorMessage(_ msg: String) {
+        centeredMessageLabel.text = msg
+        setupCenteredMessageLabel()
     }
 }
 
@@ -128,6 +200,23 @@ private extension VenuesViewController {
         NSLayoutConstraint.activate([
             venuesTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
             venuesTableView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
+    }
+    
+    func setupActivityIndicatorConstrains() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        let top = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
+        NSLayoutConstraint.activate([
+            activityIndicator.topAnchor.constraint(equalTo: view.topAnchor, constant: top + 10),
+            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+        ])
+    }
+    
+    func setupCenteredMessageLabelConstrains() {
+        centeredMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            centeredMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            centeredMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }

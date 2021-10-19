@@ -1,9 +1,4 @@
-//
-//  VenueViewModel.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/19/21.
-//
+//  Created by Maksim Kalik
 
 import Foundation
 
@@ -46,7 +41,11 @@ final class VenueCellViewModelImplementation: VenueCellViewModel {
     }
 
     func favoriteDidPress() {
-        dependencies.localStorage.addFavorite(id: venue.id)
-        isFavorite = true
+        isFavorite.toggle()
+        if isFavorite == true {
+            dependencies.localStorage.addFavorite(id: venue.id)
+        } else {
+            dependencies.localStorage.removeFavorite(id: venue.id)
+        }
     }
 }

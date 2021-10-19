@@ -1,9 +1,4 @@
-//
-//  VenueTableViewCell.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/19/21.
-//
+//  Created by Maksim Kalik
 
 import UIKit
 
@@ -17,6 +12,8 @@ final class VenueTableViewCell: UITableViewCell {
             setupSubTitleLabel()
         }
     }
+    
+    private var imageCache = NSCache<NSString, UIImage>()
 
     private var venueImageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,6 +26,7 @@ final class VenueTableViewCell: UITableViewCell {
     private var favoriteButton: UIButton = {
         let button = UIButton(type: .system)
         button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .black
         return button
     }()
     
@@ -72,7 +70,11 @@ private extension VenueTableViewCell {
 
     func setupVenueImageView() {
         guard let imageUrl = viewModel?.imageUrl else { return }
-        venueImageView.load(from: imageUrl, with: nil, complition: nil)
+        venueImageView.load(from: imageUrl, with: imageCache) { [weak self] data in
+           if let image = data {
+               self?.imageCache.setObject(image, forKey: imageUrl.absoluteString as NSString)
+           }
+        }
         contentView.addSubview(venueImageView)
         setupVenueImageViewConstrains()
     }
@@ -132,7 +134,7 @@ private extension VenueTableViewCell {
             favoriteButton.widthAnchor.constraint(equalToConstant: 24),
             favoriteButton.heightAnchor.constraint(equalToConstant: 24),
             favoriteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+            favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -17)
         ])
     }
 

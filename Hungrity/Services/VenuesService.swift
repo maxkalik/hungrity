@@ -1,9 +1,4 @@
-//
-//  NetworkService.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/16/21.
-//
+//  Created by Maksim Kalik
 
 import Foundation
 import Combine
@@ -85,7 +80,8 @@ extension VenuesService {
         var urlRequest = URLRequest(url: url)
         urlRequest.timeoutInterval = 10.0
         urlRequest.httpMethod = "GET"
-
+        print("=== GET REQUEST URL: \(url)")
+        
         return urlRequest
     }
 }

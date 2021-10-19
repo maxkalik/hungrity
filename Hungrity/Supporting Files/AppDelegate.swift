@@ -1,9 +1,4 @@
-//
-//  AppDelegate.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/16/21.
-//
+//  Created by Maksim Kalik
 
 import UIKit
 

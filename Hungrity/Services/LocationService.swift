@@ -1,9 +1,4 @@
-//
-//  LocationManager.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/16/21.
-//
+//  Created by Maksim Kalik
 
 import CoreLocation
 
@@ -57,10 +52,8 @@ class LocationService: NSObject, LocationServiceProtocol {
             let longitude = location.coordinate.longitude
 
             if currentCoordinate == nil {
-                print("LOCATION SERVICE - Location Has Been Updated")
                 currentCoordinate = Coordinate(latitude: latitude, longitude: longitude)
             } else {
-                print("LOCATION SERVICE - Stoped Updating Location")
                 locationManager.stopUpdatingLocation()
             }
         }

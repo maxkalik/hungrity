@@ -1,15 +1,10 @@
-//
-//  ImageView.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/19/21.
-//
+//  Created by Maksim Kalik
 
 import UIKit
 
 
 extension UIImageView {
-
+    
     typealias ImageLoadComplition = (_ data: UIImage?) -> Void
     
     func load(from url: URL, with cache: NSCache<NSString, UIImage>? = nil, complition: ImageLoadComplition? = nil) {
@@ -40,14 +35,13 @@ extension UIImageView {
             }
         }
     }
-
+    
     private func setup(_ view: inout UIActivityIndicatorView) {
-        view.color = .white
         view.hidesWhenStopped = true
         addSubview(view)
         setupConstrains(&view)
     }
-
+    
     private func setupConstrains(_ view: inout UIActivityIndicatorView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

@@ -1,9 +1,4 @@
-//
-//  Venues.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/17/21.
-//
+//  Created by Maksim Kalik
 
 import Foundation
 

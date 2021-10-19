@@ -1,9 +1,4 @@
-//
-//  VenuesViewModel.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/16/21.
-//
+//  Created by Maksim Kalik
 
 import Foundation
 import Combine
@@ -13,16 +8,28 @@ import UIKit
 protocol VenuesViewModelViewDelegate: AnyObject {
     func startLoading()
     func finishLoading()
+    func showErrorMessage(_ msg: String)
 }
 
 protocol VenuesViewModel {
     var viewDelegate: VenuesViewModelViewDelegate? { get set }
     var venuesCount: Int { get }
     var venues: [VenueCellViewModel] { get }
+    var favoritesButtonImageName: String { get }
     
     func viewDidLoad()
+    func viewWillAppear()
     func startRefreshing()
+    func favoritesDidPress()
 }
+
+extension VenuesViewModel {
+    var title: String {
+        "Hungrity"
+    }
+}
+
+// MARK: - View Model Implementation
 
 final class VenuesViewModelImplementation: VenuesViewModel {
 
@@ -36,7 +43,7 @@ final class VenuesViewModelImplementation: VenuesViewModel {
             self.timer = Timer.scheduledTimer(
                 timeInterval: Configuration.refreshDeadlineSeconds,
                 target: self,
-                selector: #selector(self.prepareVenues),
+                selector: #selector(prepareVenues),
                 userInfo: nil,
                 repeats: true
             )
@@ -50,6 +57,15 @@ final class VenuesViewModelImplementation: VenuesViewModel {
     private var cancellable: AnyCancellable?
     private var venuesCounter: Int = 0
     private var isFavorites: Bool = false
+    private var isLoading: Bool = false {
+        didSet {
+            if isLoading {
+                viewDelegate?.startLoading()
+            } else {
+                viewDelegate?.finishLoading()
+            }
+        }
+    }
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
@@ -81,6 +97,30 @@ final class VenuesViewModelImplementation: VenuesViewModel {
         )
     }
     
+    func viewWillAppear() {
+        isLoading = true
+    }
+
+    func favoritesDidPress() {
+        isFavorites.toggle()
+        if isFavorites == true {
+            showOnlyFavorites()
+        } else {
+            dependencies.locationService.getLocation()
+        }
+    }
+
+    var favoritesButtonImageName: String {
+        isFavorites ? "favorite_filled" : "favorite_border"
+    }
+
+    func startRefreshing() {
+        stopTimer()
+        dependencies.locationService.getLocation()
+    }
+}
+
+private extension VenuesViewModelImplementation {
     @objc func appMovedToBackground() {
         resetVenues()
     }
@@ -90,53 +130,56 @@ final class VenuesViewModelImplementation: VenuesViewModel {
     }
     
     @objc func prepareVenues() {
-        // print("--->", Configuration.maxVenuesItems + venuesCounter)
-        self.viewDelegate?.startLoading()
-        
-        let venueElements: [Venue]
-        let indexFrom = venuesCounter
         let indexTill = Configuration.maxVenuesItems + venuesCounter
 
-        let filteredVenues = isFavorites ? allVenues.filter { self.dependencies.localStorage.favorites.contains($0.id) } : allVenues
-        
-        if filteredVenues.count >= indexTill {
-            venueElements = Array(filteredVenues[indexFrom ..< indexTill])
-            venuesCounter += Configuration.maxVenuesItems
-        } else {
-            venueElements = Array(filteredVenues[indexFrom ..< filteredVenues.count])
-            resetVenues()
-            DispatchQueue.main.asyncAfter(deadline: .now() + Configuration.refreshDeadlineSeconds) {
-                self.dependencies.locationService.getLocation()
-            }
-        }
-
-        print("**** \(venueElements)")
-        self.venues = venueElements.map { VenueCellViewModelImplementation(dependencies: dependencies, model: $0 )}
-        self.viewDelegate?.finishLoading()
+        venues = prepareVenuesFrom(venuesCounter, till: indexTill)
+            .map { VenueCellViewModelImplementation(dependencies: dependencies, model: $0 )}
+        isLoading = false
     }
     
-//    private func addFavorite(id: String) {
-//        dependencies.localStorage.addFavorite(id: id)
-//    }
-    
+    private func prepareVenuesFrom(_ from: Int, till: Int) -> [Venue] {
+        let venueElements: [Venue]
+        if allVenues.count >= till {
+            venueElements = Array(allVenues[from ..< till])
+            venuesCounter += Configuration.maxVenuesItems
+        } else {
+            venueElements = Array(allVenues[from ..< allVenues.count])
+            resetVenues()
+            DispatchQueue.main.asyncAfter(deadline: .now() + Configuration.refreshDeadlineSeconds) { [weak self] in
+                self?.dependencies.locationService.getLocation()
+            }
+        }
+        return venueElements
+    }
+
+    func showOnlyFavorites() {
+        resetVenues()
+        self.venues = allVenues
+            .filter { self.dependencies.localStorage.favorites.contains($0.id) }
+            .map { VenueCellViewModelImplementation(dependencies: dependencies, model: $0 )}
+    }
+
     func resetVenues() {
+        stopTimer()
+        venues.removeAll()
+    }
+
+    func stopTimer() {
         timer?.invalidate()
         timer = nil
-        venues.removeAll()
         venuesCounter = 0
     }
     
     func fetchVenues(by coordinate: Coordinate) {
-        
-        viewDelegate?.startLoading()
-        
+
         let latitude = String(coordinate.latitude)
         let longitude = String(coordinate.longitude)
 
         cancellable = dependencies.venuesService
             .fetchVenues(by: [.latitude: latitude, .longitude: longitude])
             .catch { error -> Just<[Venue]> in
-                self.viewDelegate?.finishLoading()
+                self.isLoading = false
+                self.viewDelegate?.showErrorMessage("Something went wrong.\nPlease try again later.")
                 return Just([])
             }
             .sink(receiveCompletion: {_ in }, receiveValue: { [weak self] venues in
@@ -147,24 +190,18 @@ final class VenuesViewModelImplementation: VenuesViewModel {
                 self.allVenues = venues
             })
     }
-    
-    func startRefreshing() {
-        timer?.invalidate()
-        timer = nil
-        venuesCounter = 0
-        dependencies.locationService.getLocation()
-    }
 }
 
 // MARK: - LocationServiceDelegate
 
 extension VenuesViewModelImplementation: LocationServiceDelegate {
     func locationDidUpdateCurrentCoordinate(_ coordinate: Coordinate) {
-        print("=== did update current coordinate: \(coordinate.latitude), \(coordinate.longitude)")
+        isLoading = true
         fetchVenues(by: coordinate)
     }
     
     func locationDidFailWithError(_ error: Error) {
-        print("=== location did failed")
+        isLoading = false
+        self.viewDelegate?.showErrorMessage("Something wrong with defining your location.\nPlease try again later.")
     }
 }

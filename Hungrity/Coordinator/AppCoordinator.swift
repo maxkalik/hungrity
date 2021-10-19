@@ -1,9 +1,4 @@
-//
-//  MainCoordinator.swift
-//  Hungrity
-//
-//  Created by Maksim Kalik on 10/18/21.
-//
+//  Created by Maksim Kalik
 
 import Foundation
 import UIKit
