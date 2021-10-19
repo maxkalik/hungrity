@@ -8,11 +8,10 @@
 import Foundation
 
 protocol VenueCellViewModel {
-    var isFavorite: Bool { get }
     var title: String { get }
     var subTitle: String? { get }
     var imageUrl: URL? { get }
-    var favoriteButtonImage: String { get }
+    var favoriteButtonImageName: String { get }
     
     func favoriteDidPress()
 }
@@ -21,12 +20,12 @@ final class VenueCellViewModelImplementation: VenueCellViewModel {
 
     private var venue: Venue
     private var dependencies: HasLocalStorage
-    
-    var isFavorite: Bool = false
+    private var isFavorite: Bool
     
     init(dependencies: HasLocalStorage, model: Venue) {
         self.dependencies = dependencies
         self.venue = model
+        self.isFavorite = dependencies.localStorage.favorites.contains(venue.id)
     }
     
     var title: String {
@@ -42,11 +41,12 @@ final class VenueCellViewModelImplementation: VenueCellViewModel {
         return URL(string: urlString)
     }
     
-    var favoriteButtonImage: String {
-        isFavorite ? "" : ""
+    var favoriteButtonImageName: String {
+        isFavorite ? "favorite_filled" : "favorite_border"
     }
 
     func favoriteDidPress() {
-        print(#function)
+        dependencies.localStorage.addFavorite(id: venue.id)
+        isFavorite = true
     }
 }

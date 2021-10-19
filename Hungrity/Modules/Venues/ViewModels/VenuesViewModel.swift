@@ -10,13 +10,13 @@ import Combine
 import CoreLocation
 import UIKit
 
-enum ListViewModelState {
-    case loading
-    case finishedLoading
-    case error(Error)
+protocol VenuesViewModelViewDelegate: AnyObject {
+    func startLoading()
+    func finishLoading()
 }
 
 protocol VenuesViewModel {
+    var viewDelegate: VenuesViewModelViewDelegate? { get set }
     var venuesCount: Int { get }
     var venues: [VenueCellViewModel] { get }
     
@@ -26,6 +26,8 @@ protocol VenuesViewModel {
 
 final class VenuesViewModelImplementation: VenuesViewModel {
 
+    weak var viewDelegate: VenuesViewModelViewDelegate?
+    
     private var allVenues = [Venue]() {
         didSet {
             guard allVenues.isEmpty == false else { return }
@@ -40,9 +42,7 @@ final class VenuesViewModelImplementation: VenuesViewModel {
             )
         }
     }
-    
-    @Published private(set) var state: ListViewModelState = .loading
-    
+
     var venues = [VenueCellViewModel]()
 
     private var timer: Timer?
@@ -90,7 +90,9 @@ final class VenuesViewModelImplementation: VenuesViewModel {
     }
     
     @objc func prepareVenues() {
-        print("--->", Configuration.maxVenuesItems + venuesCounter)
+        // print("--->", Configuration.maxVenuesItems + venuesCounter)
+        self.viewDelegate?.startLoading()
+        
         let venueElements: [Venue]
         let indexFrom = venuesCounter
         let indexTill = Configuration.maxVenuesItems + venuesCounter
@@ -110,11 +112,12 @@ final class VenuesViewModelImplementation: VenuesViewModel {
 
         print("**** \(venueElements)")
         self.venues = venueElements.map { VenueCellViewModelImplementation(dependencies: dependencies, model: $0 )}
+        self.viewDelegate?.finishLoading()
     }
     
-    private func addFavorite(id: String) {
-        dependencies.localStorage.addFavorite(id: id)
-    }
+//    private func addFavorite(id: String) {
+//        dependencies.localStorage.addFavorite(id: id)
+//    }
     
     func resetVenues() {
         timer?.invalidate()
@@ -125,12 +128,15 @@ final class VenuesViewModelImplementation: VenuesViewModel {
     
     func fetchVenues(by coordinate: Coordinate) {
         
+        viewDelegate?.startLoading()
+        
         let latitude = String(coordinate.latitude)
         let longitude = String(coordinate.longitude)
 
         cancellable = dependencies.venuesService
             .fetchVenues(by: [.latitude: latitude, .longitude: longitude])
             .catch { error -> Just<[Venue]> in
+                self.viewDelegate?.finishLoading()
                 return Just([])
             }
             .sink(receiveCompletion: {_ in }, receiveValue: { [weak self] venues in
@@ -143,6 +149,9 @@ final class VenuesViewModelImplementation: VenuesViewModel {
     }
     
     func startRefreshing() {
+        timer?.invalidate()
+        timer = nil
+        venuesCounter = 0
         dependencies.locationService.getLocation()
     }
 }
@@ -150,12 +159,12 @@ final class VenuesViewModelImplementation: VenuesViewModel {
 // MARK: - LocationServiceDelegate
 
 extension VenuesViewModelImplementation: LocationServiceDelegate {
-    func didUpdateCurrentCoordinate(_ coordinate: Coordinate) {
+    func locationDidUpdateCurrentCoordinate(_ coordinate: Coordinate) {
         print("=== did update current coordinate: \(coordinate.latitude), \(coordinate.longitude)")
         fetchVenues(by: coordinate)
     }
     
-    func didFailWithError(_ error: Error) {
+    func locationDidFailWithError(_ error: Error) {
         print("=== location did failed")
     }
 }

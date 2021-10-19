@@ -7,13 +7,18 @@
 
 import CoreLocation
 
+protocol LocationServiceCoordinatorDelegate: AnyObject {
+    func locationAuthStatusDidChange(_ isValidStatus: Bool)
+}
+
 protocol LocationServiceDelegate: AnyObject {
-    func didUpdateCurrentCoordinate(_ coordinate: Coordinate)
-    func didFailWithError(_ error: Error)
+    func locationDidUpdateCurrentCoordinate(_ coordinate: Coordinate)
+    func locationDidFailWithError(_ error: Error)
 }
 
 protocol LocationServiceProtocol: CLLocationManagerDelegate {
     var delegate: LocationServiceDelegate? { get set }
+    var coordinatorDelegate: LocationServiceCoordinatorDelegate? { get set }
 
     func getLocation()
 }
@@ -23,32 +28,25 @@ class LocationService: NSObject, LocationServiceProtocol {
     private let locationManager = CLLocationManager()
 
     weak var delegate: LocationServiceDelegate?
+    weak var coordinatorDelegate: LocationServiceCoordinatorDelegate?
     
     var currentCoordinate: Coordinate? {
         didSet {
             guard let coordinate = currentCoordinate else { return }
-            delegate?.didUpdateCurrentCoordinate(coordinate)
+            delegate?.locationDidUpdateCurrentCoordinate(coordinate)
         }
     }
     
     override init() {
         super.init()
         locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
     }
 
     func getLocation() {
-        getLocationWhileUsingApp()
-    }
-    
-    func getLocationWhileUsingApp() {
         if currentCoordinate != nil {
             currentCoordinate = nil
         }
-        locationManager.startUpdatingLocation()
-    }
-    
-    func startAlways() {
-        locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
     }
     
@@ -70,31 +68,15 @@ class LocationService: NSObject, LocationServiceProtocol {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
-        delegate?.didFailWithError(error)
+        delegate?.locationDidFailWithError(error)
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        let isValidStatus = status == .authorizedAlways || status == .authorizedWhenInUse
+        self.coordinatorDelegate?.locationAuthStatusDidChange(isValidStatus)
 
-    func validateLocationAuthorizationStatus() {
-        
-        let status: CLAuthorizationStatus
-        
-        if #available(iOS 14, *) {
-            status = locationManager.authorizationStatus
-        } else {
-            status = CLLocationManager.authorizationStatus()
-        }
-        
-        switch status {
-        case .notDetermined, .denied, .restricted:
-            print("=== location not authorized")
-            locationManager.requestAlwaysAuthorization()
-        case .authorizedWhenInUse:
-            print("=== location authorized only while using app")
-            return
-        case .authorizedAlways:
-            print("=== location authorized always")
-            return
-        default:
-            break
+        if isValidStatus == true {
+            getLocation()
         }
     }
 }

@@ -18,6 +18,8 @@
 		1562D0B1271DCEB4001FD443 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1562D0B0271DCEB4001FD443 /* LocalStorage.swift */; };
 		15C6716E271F20FD0023D590 /* VenueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C6716D271F20FD0023D590 /* VenueTableViewCell.swift */; };
 		15C67170271F21DA0023D590 /* VenueCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C6716F271F21DA0023D590 /* VenueCellViewModel.swift */; };
+		15C67175271F4F8D0023D590 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C67174271F4F8D0023D590 /* ImageView.swift */; };
+		15C67177271F531C0023D590 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C67176271F531C0023D590 /* AlertModel.swift */; };
 		15DAA4EE271B38B000EB5B80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */; };
 		15DAA4F0271B38B000EB5B80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */; };
 		15DAA4F2271B38B000EB5B80 /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */; };
@@ -40,6 +42,8 @@
 		1562D0B0271DCEB4001FD443 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		15C6716D271F20FD0023D590 /* VenueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueTableViewCell.swift; sourceTree = "<group>"; };
 		15C6716F271F21DA0023D590 /* VenueCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueCellViewModel.swift; sourceTree = "<group>"; };
+		15C67174271F4F8D0023D590 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		15C67176271F531C0023D590 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		15DAA4EA271B38B000EB5B80 /* Hungrity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hungrity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 		1529D010271B45DC0080DE70 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				15C67173271F4F800023D590 /* Extensions */,
 				1529D014271B509E0080DE70 /* Constants.swift */,
 			);
 			path = Utils;
@@ -94,6 +99,7 @@
 				1529D019271CA2420080DE70 /* Venue.swift */,
 				1529D01B271CA26A0080DE70 /* Venues.swift */,
 				1529D01E271CA8EC0080DE70 /* Coordinate.swift */,
+				15C67176271F531C0023D590 /* AlertModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -113,6 +119,14 @@
 				15C6716D271F20FD0023D590 /* VenueTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		15C67173271F4F800023D590 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				15C67174271F4F8D0023D590 /* ImageView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		15DAA4E1271B38B000EB5B80 = {
@@ -281,11 +295,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				15E7A53F271D76DF00E64239 /* Dependencies.swift in Sources */,
+				15C67175271F4F8D0023D590 /* ImageView.swift in Sources */,
 				15C67170271F21DA0023D590 /* VenueCellViewModel.swift in Sources */,
 				1529D00F271B45CB0080DE70 /* VenuesService.swift in Sources */,
 				1529D00D271B45AD0080DE70 /* LocationService.swift in Sources */,
 				1529D017271B55BF0080DE70 /* VenuesViewModel.swift in Sources */,
 				1529D01C271CA26A0080DE70 /* Venues.swift in Sources */,
+				15C67177271F531C0023D590 /* AlertModel.swift in Sources */,
 				1529D01A271CA2420080DE70 /* Venue.swift in Sources */,
 				1562D0B1271DCEB4001FD443 /* LocalStorage.swift in Sources */,
 				15E7A544271D778600E64239 /* Coordinator.swift in Sources */,
@@ -457,7 +473,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -488,7 +504,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
