@@ -20,7 +20,7 @@ Each venue also has “Favorite” action next to it. “Favorite” works as a 
 - [x] Architecture: MVVM + Coordinator
 - [x] Venues Service implemented with Combine framework
 - [x] Favorite venues can be filtered
-- [x] Timer is not workin on background mode but added a bit workaraund solution with Date
+- [x] Timer is not working on background mode but it's added a bit workaround solution with Date
 - [x] Added simple transition animatins
 
 ![CurRates App](Documentation/preview.png)
