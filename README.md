@@ -22,3 +22,5 @@ Each venue also has “Favorite” action next to it. “Favorite” works as a 
 - [x] Favorite venues can be filtered
 - [x] Timer is not workin on background mode but added a bit workaraund solution with Date
 - [x] Added simple transition animatins
+
+![CurRates App](Documentation/preview.png)
