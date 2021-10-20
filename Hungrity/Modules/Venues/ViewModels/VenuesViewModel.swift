@@ -2,7 +2,6 @@
 
 import Foundation
 import Combine
-import CoreLocation
 import UIKit
 
 protocol VenuesViewModelViewDelegate: AnyObject {

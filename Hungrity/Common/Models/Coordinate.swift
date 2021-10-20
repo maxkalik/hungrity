@@ -1,6 +1,6 @@
 //  Created by Maksim Kalik
 
-import MapKit
+import CoreLocation
 
 struct Coordinate: Equatable {
     let latitude: CLLocationDegrees
