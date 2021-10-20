@@ -82,10 +82,10 @@ private extension LocationService {
     private func calculateRequests() -> Int {
         let backgroundSec = abs(Int(currentDate?.timeIntervalSince(Date()) ?? 0) % 60)
         
-        let coordinatesCount = Constants.coordinates.count
-        let backgroundRequests: Int = (backgroundSec / coordinatesCount) % coordinatesCount
+        let refreshDeadlineSeconds = Int(Configuration.refreshDeadlineSeconds)
+        let backgroundRequests: Int = (backgroundSec / refreshDeadlineSeconds) % refreshDeadlineSeconds
 
-        if (backgroundRequests + requestCounter) > coordinatesCount - 1 {
+        if (backgroundRequests + requestCounter) > refreshDeadlineSeconds - 1 {
             return abs(backgroundRequests - requestCounter)
         } else {
             return backgroundRequests + requestCounter

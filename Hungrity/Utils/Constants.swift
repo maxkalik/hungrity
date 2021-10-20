@@ -22,7 +22,7 @@ struct Constants {
 }
 
 struct Configuration {
-    static let refreshDeadlineSeconds: Double = 5
+    static let refreshDeadlineSeconds: Double = 10
     static let maxVenuesItems = 15
 }
 
