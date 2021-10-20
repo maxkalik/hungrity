@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Documentation/app-icon.png" style="border-radius: 60px" />
+  <img src="Documentation/app-icon.png" />
 </p>
 
 <p align="center">
@@ -29,4 +29,6 @@ Each venue also has “Favorite” action next to it. “Favorite” works as a 
 - [x] Timer is not working on background mode but it's added a bit workaround solution with Date
 - [x] Added simple transition animatins
 
-![CurRates App](Documentation/preview.png)
+<p align="center">
+  <img src="Documentation/preview.png" />
+</p>
