@@ -12,6 +12,7 @@ final class VenuesViewController: UIViewController {
     
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.frame.size.width = 55
         activityIndicator.style = .medium
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
@@ -126,7 +127,7 @@ private extension VenuesViewController {
     @objc func favoritesBarButtonItemPressed() {
         viewModel?.favoritesDidPress()
         updateFavoritesBarButtonItem()
-        venuesTableView.reloadData()
+        reloadVenuesTableView()
     }
     
     func updateFavoritesBarButtonItem() {
@@ -167,12 +168,23 @@ extension VenuesViewController: VenuesViewModelViewDelegate {
     func finishLoading() {
         hideSpinners()
         hideCenteredMessage()
-        venuesTableView.reloadData()
+        reloadVenuesTableView()
     }
     
     func showCenteredMessage(_ msg: String) {
         centeredMessageLabel.text = msg
         setupCenteredMessageLabel()
+    }
+    
+    private func reloadVenuesTableView() {
+        UIView.transition(
+            with: venuesTableView,
+            duration: 0.7,
+            options: .transitionCrossDissolve,
+            animations: {
+                self.venuesTableView.reloadData()
+            }, completion: nil
+        )
     }
     
     private func hideSpinners() {

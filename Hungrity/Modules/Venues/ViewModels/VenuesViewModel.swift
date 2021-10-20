@@ -96,7 +96,7 @@ private extension VenuesViewModelImplementation {
             .fetchVenues(by: [.latitude: latitude, .longitude: longitude])
             .map { values in
                 values
-                    .prefix(15)
+                    .prefix(Configuration.maxVenuesItems)
                     .map { VenueCellViewModelImplementation(dependencies: self.dependencies, model: $0 ) }
             }
             .catch { error -> Just<[VenueCellViewModel]> in

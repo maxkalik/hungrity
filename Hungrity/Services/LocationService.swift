@@ -80,10 +80,16 @@ private extension LocationService {
     }
     
     private func calculateRequests() -> Int {
+
+        // Get the amount of seconds started since the device went to backgound
+        // and take only the decimal number
+
         let backgroundSec = abs(Int(currentDate?.timeIntervalSince(Date()) ?? 0) % 60)
-        
         let refreshDeadlineSeconds = Int(Configuration.refreshDeadlineSeconds)
-        let backgroundRequests: Int = (backgroundSec / refreshDeadlineSeconds) % refreshDeadlineSeconds
+        let backgroundRequests: Int = backgroundSec % refreshDeadlineSeconds
+
+        // Calculate the actual request which could be
+        // if the device wouldn't be in the background
 
         if (backgroundRequests + requestCounter) > refreshDeadlineSeconds - 1 {
             return abs(backgroundRequests - requestCounter)
