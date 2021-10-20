@@ -38,27 +38,7 @@ class LocationService: LocationServiceProtocol {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    @objc func appMovedToBackground() {
-        print("=== App Moved to background")
-        currentDate = Date()
-    }
-    
-    @objc func appWillEnterForeground() {
-        let backgroundSec = abs(Int(currentDate?.timeIntervalSince(Date()) ?? 0) % 60)
-        
-        let coordinatesCount = Constants.coordinates.count
-        let backgroundRequests: Int = (backgroundSec / coordinatesCount) % coordinatesCount
 
-        if (backgroundRequests + requestCounter) > coordinatesCount - 1 {
-            requestCounter = abs(backgroundRequests - requestCounter)
-        } else {
-            requestCounter += backgroundRequests
-        }
-
-        print("=== App Will Enter Foregroundd with updated request counter: \(requestCounter)")
-    }
-    
     func startGettingLocation() {
         guard timer == nil else { return }
         self.timer = Timer.scheduledTimer(
@@ -69,17 +49,46 @@ class LocationService: LocationServiceProtocol {
             repeats: true
         )
     }
+ 
+    func getCurrentLocation() {
+        let coordinates = Constants.coordinates
+        let coordinate = coordinates[requestCounter]
+        print("=== Get location number: \(requestCounter). Latitude: \(coordinate.lat), Longitude: \(coordinate.lon)")
+        delegate?.locationDidUpdateCurrentCoordinate(Coordinate(latitude: coordinate.lat, longitude: coordinate.lon))
+    }
+}
+
+private extension LocationService {
+    @objc func appMovedToBackground() {
+        print("=== App Moved to background")
+        currentDate = Date()
+    }
     
+    @objc func appWillEnterForeground() {
+        updateCounter()
+        print("=== App Will Enter Foregroundd with updated request counter: \(requestCounter)")
+    }
+
     @objc func setCounter() {
         let coordinates = Constants.coordinates
         requestCounter = requestCounter < coordinates.count - 1 ? requestCounter + 1 : 0
         getCurrentLocation()
     }
     
-    func getCurrentLocation() {
-        let coordinates = Constants.coordinates
-        let coordinate = coordinates[requestCounter]
-        print("=== Get location number: \(requestCounter). Latitude: \(coordinate.lat), Longitude: \(coordinate.lon)")
-        delegate?.locationDidUpdateCurrentCoordinate(Coordinate(latitude: coordinate.lat, longitude: coordinate.lon))
+    private func updateCounter() {
+        requestCounter = calculateRequests()
+    }
+    
+    private func calculateRequests() -> Int {
+        let backgroundSec = abs(Int(currentDate?.timeIntervalSince(Date()) ?? 0) % 60)
+        
+        let coordinatesCount = Constants.coordinates.count
+        let backgroundRequests: Int = (backgroundSec / coordinatesCount) % coordinatesCount
+
+        if (backgroundRequests + requestCounter) > coordinatesCount - 1 {
+            return abs(backgroundRequests - requestCounter)
+        } else {
+            return backgroundRequests + requestCounter
+        }
     }
 }
