@@ -19,8 +19,14 @@ final class VenueTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 4
+        imageView.layer.cornerRadius = 8
         return imageView
+    }()
+    
+    private var imageViewSpinner: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
     }()
     
     private var favoriteButton: UIButton = {
@@ -54,6 +60,7 @@ final class VenueTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupCommon()
+        setupImageViewSpinner()
     }
     
     required init?(coder: NSCoder) {
@@ -69,14 +76,23 @@ private extension VenueTableViewCell {
     }
 
     func setupVenueImageView() {
+        imageViewSpinner.startAnimating()
         guard let imageUrl = viewModel?.imageUrl else { return }
         venueImageView.load(from: imageUrl, with: imageCache) { [weak self] data in
-           if let image = data {
+            if let image = data {
                self?.imageCache.setObject(image, forKey: imageUrl.absoluteString as NSString)
-           }
+            }
+            DispatchQueue.main.async {
+                self?.imageViewSpinner.stopAnimating()
+            }
         }
         contentView.addSubview(venueImageView)
         setupVenueImageViewConstrains()
+    }
+    
+    func setupImageViewSpinner() {
+        venueImageView.addSubview(imageViewSpinner)
+        setupImageViewSpinnerConstrains()
     }
     
     func setupFavoriteButton() {
@@ -125,6 +141,14 @@ private extension VenueTableViewCell {
             venueImageView.heightAnchor.constraint(equalToConstant: 48),
             venueImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             venueImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
+        ])
+    }
+    
+    func setupImageViewSpinnerConstrains() {
+        imageViewSpinner.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageViewSpinner.centerXAnchor.constraint(equalTo: venueImageView.centerXAnchor),
+            imageViewSpinner.centerYAnchor.constraint(equalTo: venueImageView.centerYAnchor)
         ])
     }
     

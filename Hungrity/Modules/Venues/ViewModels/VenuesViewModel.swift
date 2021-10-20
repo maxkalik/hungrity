@@ -8,7 +8,7 @@ import UIKit
 protocol VenuesViewModelViewDelegate: AnyObject {
     func startLoading()
     func finishLoading()
-    func showErrorMessage(_ msg: String)
+    func showCenteredMessage(_ msg: String)
 }
 
 protocol VenuesViewModel {
@@ -71,8 +71,6 @@ final class VenuesViewModelImplementation: VenuesViewModel {
         self.dependencies = dependencies
         dependencies.locationService.delegate = self
         dependencies.locationService.getLocation()
-        
-        print(dependencies.localStorage.favorites)
     }
     
     deinit {
@@ -179,7 +177,7 @@ private extension VenuesViewModelImplementation {
             .fetchVenues(by: [.latitude: latitude, .longitude: longitude])
             .catch { error -> Just<[Venue]> in
                 self.isLoading = false
-                self.viewDelegate?.showErrorMessage("Something went wrong.\nPlease try again later.")
+                self.viewDelegate?.showCenteredMessage("Something went wrong.\nPlease try again later.")
                 return Just([])
             }
             .sink(receiveCompletion: {_ in }, receiveValue: { [weak self] venues in
@@ -202,6 +200,6 @@ extension VenuesViewModelImplementation: LocationServiceDelegate {
     
     func locationDidFailWithError(_ error: Error) {
         isLoading = false
-        self.viewDelegate?.showErrorMessage("Something wrong with defining your location.\nPlease try again later.")
+        self.viewDelegate?.showCenteredMessage("Something wrong with defining your location.\nPlease try again later.")
     }
 }
