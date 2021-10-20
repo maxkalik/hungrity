@@ -1,4 +1,7 @@
-![Hungrity App](Documentation/app-icon.png)
+<p align="center">
+  <img src="Documentation/app-icon.png" style="border-radius: 60px" />
+  Hungrity
+</p>
 
 ## Concept
 
