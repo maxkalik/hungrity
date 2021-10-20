@@ -125,7 +125,7 @@ private extension VenueTableViewCell {
     
     func updateFavoriteButtonIcon() {
         guard let imageName = viewModel?.favoriteButtonImageName else { return }
-        let image = UIImage(named: imageName)
+        let image = UIImage(icon: imageName)
         favoriteButton.setImage(image, for: .normal)
     }
 }

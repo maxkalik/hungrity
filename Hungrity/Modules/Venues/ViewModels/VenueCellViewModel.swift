@@ -7,7 +7,7 @@ protocol VenueCellViewModel {
     var subTitle: String? { get }
     var imageUrl: URL? { get }
     var isFavorite: Bool { get }
-    var favoriteButtonImageName: String { get }
+    var favoriteButtonImageName: BaseIcon { get }
     
     func favoriteDidPress()
 }
@@ -37,8 +37,8 @@ final class VenueCellViewModelImplementation: VenueCellViewModel {
         return URL(string: urlString)
     }
     
-    var favoriteButtonImageName: String {
-        isFavorite ? "favorite_filled" : "favorite_border"
+    var favoriteButtonImageName: BaseIcon {
+        isFavorite ? .favoriteSelected : .favoriteNotSelected
     }
 
     func favoriteDidPress() {

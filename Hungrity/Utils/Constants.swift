@@ -25,3 +25,8 @@ struct Configuration {
     static let refreshDeadlineSeconds: Double = 5
     static let maxVenuesItems = 15
 }
+
+enum BaseIcon: String {
+    case favoriteSelected = "favorite_filled"
+    case favoriteNotSelected = "favorite_border"
+}

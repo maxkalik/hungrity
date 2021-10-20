@@ -131,7 +131,7 @@ private extension VenuesViewController {
     
     func updateFavoritesBarButtonItem() {
         guard let imageName = viewModel?.favoritesButtonImageName else { return }
-        let image = UIImage(named: imageName)
+        let image = UIImage(icon: imageName)
         favoritesBarButtonItem.image = image
     }
 }

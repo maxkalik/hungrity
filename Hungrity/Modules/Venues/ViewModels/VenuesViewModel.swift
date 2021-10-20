@@ -15,7 +15,7 @@ protocol VenuesViewModel {
     var viewDelegate: VenuesViewModelViewDelegate? { get set }
     var venuesCount: Int { get }
     var venues: [VenueCellViewModel] { get }
-    var favoritesButtonImageName: String { get }
+    var favoritesButtonImageName: BaseIcon { get }
 
     func viewDidLoad()
     func startRefreshing()
@@ -75,8 +75,8 @@ final class VenuesViewModelImplementation: VenuesViewModel {
         isFavorites.toggle()
     }
 
-    var favoritesButtonImageName: String {
-        isFavorites ? "favorite_filled" : "favorite_border"
+    var favoritesButtonImageName: BaseIcon {
+        isFavorites ? .favoriteSelected : .favoriteNotSelected
     }
 
     func startRefreshing() {
