@@ -1,6 +1,9 @@
 <p align="center">
   <img src="Documentation/app-icon.png" style="border-radius: 60px" />
-  Hungrity
+</p>
+
+<p align="center">
+  <strong>Hungrity</strong>
 </p>
 
 ## Concept
