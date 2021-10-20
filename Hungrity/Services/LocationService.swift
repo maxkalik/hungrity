@@ -1,75 +1,85 @@
 //  Created by Maksim Kalik
 
-import CoreLocation
-
-protocol LocationServiceCoordinatorDelegate: AnyObject {
-    func locationAuthStatusDidChange(_ isValidStatus: Bool)
-}
+import UIKit
 
 protocol LocationServiceDelegate: AnyObject {
     func locationDidUpdateCurrentCoordinate(_ coordinate: Coordinate)
-    func locationDidFailWithError(_ error: Error)
 }
 
-protocol LocationServiceProtocol: CLLocationManagerDelegate {
+protocol LocationServiceProtocol {
     var delegate: LocationServiceDelegate? { get set }
-    var coordinatorDelegate: LocationServiceCoordinatorDelegate? { get set }
-
-    func getLocation()
+    
+    func startGettingLocation()
+    func getCurrentLocation()
 }
 
-class LocationService: NSObject, LocationServiceProtocol {
-
-    private let locationManager = CLLocationManager()
+class LocationService: LocationServiceProtocol {
 
     weak var delegate: LocationServiceDelegate?
-    weak var coordinatorDelegate: LocationServiceCoordinatorDelegate?
     
-    var currentCoordinate: Coordinate? {
-        didSet {
-            guard let coordinate = currentCoordinate else { return }
-            delegate?.locationDidUpdateCurrentCoordinate(coordinate)
-        }
+    private var timer: Timer?
+    private var requestCounter = 0
+    private var currentDate: Date?
+    
+    init() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(
+            self, selector: #selector(appMovedToBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self, selector: #selector(appWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
     
-    override init() {
-        super.init()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
+    
+    @objc func appMovedToBackground() {
+        print("=== App Moved to background")
+        currentDate = Date()
+    }
+    
+    @objc func appWillEnterForeground() {
+        let backgroundSec = abs(Int(currentDate?.timeIntervalSince(Date()) ?? 0) % 60)
+        
+        let coordinatesCount = Constants.coordinates.count
+        let backgroundRequests: Int = (backgroundSec / coordinatesCount) % coordinatesCount
 
-    func getLocation() {
-        if currentCoordinate != nil {
-            currentCoordinate = nil
+        if (backgroundRequests + requestCounter) > coordinatesCount - 1 {
+            requestCounter = abs(backgroundRequests - requestCounter)
+        } else {
+            requestCounter += backgroundRequests
         }
-        locationManager.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-  
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
 
-            if currentCoordinate == nil {
-                currentCoordinate = Coordinate(latitude: latitude, longitude: longitude)
-            } else {
-                locationManager.stopUpdatingLocation()
-            }
-        }
+        print("=== App Will Enter Foregroundd with updated request counter: \(requestCounter)")
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        locationManager.stopUpdatingLocation()
-        delegate?.locationDidFailWithError(error)
+    func startGettingLocation() {
+        guard timer == nil else { return }
+        self.timer = Timer.scheduledTimer(
+            timeInterval: Configuration.refreshDeadlineSeconds,
+            target: self,
+            selector: #selector(setCounter),
+            userInfo: nil,
+            repeats: true
+        )
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        let isValidStatus = status == .authorizedAlways || status == .authorizedWhenInUse
-        self.coordinatorDelegate?.locationAuthStatusDidChange(isValidStatus)
-
-        if isValidStatus == true {
-            getLocation()
-        }
+    @objc func setCounter() {
+        let coordinates = Constants.coordinates
+        requestCounter = requestCounter < coordinates.count - 1 ? requestCounter + 1 : 0
+        getCurrentLocation()
+    }
+    
+    func getCurrentLocation() {
+        let coordinates = Constants.coordinates
+        let coordinate = coordinates[requestCounter]
+        print("=== Get location number: \(requestCounter). Latitude: \(coordinate.lat), Longitude: \(coordinate.lon)")
+        delegate?.locationDidUpdateCurrentCoordinate(Coordinate(latitude: coordinate.lat, longitude: coordinate.lon))
     }
 }

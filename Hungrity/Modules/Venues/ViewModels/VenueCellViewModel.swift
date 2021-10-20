@@ -6,6 +6,7 @@ protocol VenueCellViewModel {
     var title: String { get }
     var subTitle: String? { get }
     var imageUrl: URL? { get }
+    var isFavorite: Bool { get }
     var favoriteButtonImageName: String { get }
     
     func favoriteDidPress()
@@ -15,7 +16,7 @@ final class VenueCellViewModelImplementation: VenueCellViewModel {
 
     private var venue: Venue
     private var dependencies: HasLocalStorage
-    private var isFavorite: Bool
+    var isFavorite: Bool
     
     init(dependencies: HasLocalStorage, model: Venue) {
         self.dependencies = dependencies
