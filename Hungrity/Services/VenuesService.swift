@@ -3,6 +3,8 @@
 import Foundation
 import Combine
 
+typealias Coordinates = [Query : String]
+
 enum ServiceError: Error {
     case sessionFailed(error: URLError)
     case decodingFailed
@@ -17,7 +19,6 @@ enum Query: String {
 }
 
 protocol VenuesServiceProtocol {
-    typealias Coordinates = [Query : String]
     func fetchVenues(by coordinates: Coordinates) -> AnyPublisher<[Venue], ServiceError>
 }
 

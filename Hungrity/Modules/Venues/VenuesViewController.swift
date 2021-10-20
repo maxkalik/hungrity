@@ -45,6 +45,7 @@ final class VenuesViewController: UIViewController {
         let tableView = UITableView()
         tableView.rowHeight = 60
         tableView.separatorStyle = .none
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 20, right: 0)
         return tableView
     }()
     
@@ -56,13 +57,13 @@ final class VenuesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel?.viewDidLoad()
 
         setupCommon()
         setupVenuesTableView()
         setupTitleLabel()
         setupLeftBarActivityIndicatorItem()
         setupRightBarButtonItem()
+        viewModel?.viewDidLoad()
     }
 }
 
@@ -99,7 +100,7 @@ private extension VenuesViewController {
     }
     
     func setupCenteredMessageLabel() {
-        let isDescendant = centeredMessageLabel.isDescendant(of: view) == true
+        let isDescendant = centeredMessageLabel.isDescendant(of: view)
         if isDescendant == false {
             venuesTableView.addSubview(centeredMessageLabel)
             setupCenteredMessageLabelConstrains()
@@ -130,7 +131,7 @@ private extension VenuesViewController {
     
     func updateFavoritesBarButtonItem() {
         guard let imageName = viewModel?.favoritesButtonImageName else { return }
-        let image = UIImage(named: imageName)
+        let image = UIImage(icon: imageName)
         favoritesBarButtonItem.image = image
     }
 }
@@ -164,22 +165,28 @@ extension VenuesViewController: VenuesViewModelViewDelegate {
     }
     
     func finishLoading() {
-        if refreshControl.isRefreshing {
-            refreshControl.endRefreshing()
-        } else {
-            activityIndicator.stopAnimating()
-        }
-        
-        if centeredMessageLabel.isDescendant(of: view) == true {
-            centeredMessageLabel.removeFromSuperview()
-        }
-        
+        hideSpinners()
+        hideCenteredMessage()
         venuesTableView.reloadData()
     }
     
     func showCenteredMessage(_ msg: String) {
         centeredMessageLabel.text = msg
         setupCenteredMessageLabel()
+    }
+    
+    private func hideSpinners() {
+        if refreshControl.isRefreshing {
+            refreshControl.endRefreshing()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
+    private func hideCenteredMessage() {
+        if viewModel?.venues.isEmpty == false && centeredMessageLabel.isDescendant(of: view) == true {
+            centeredMessageLabel.removeFromSuperview()
+        }
     }
 }
 

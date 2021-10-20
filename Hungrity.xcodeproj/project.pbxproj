@@ -20,6 +20,7 @@
 		15C67170271F21DA0023D590 /* VenueCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C6716F271F21DA0023D590 /* VenueCellViewModel.swift */; };
 		15C67175271F4F8D0023D590 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C67174271F4F8D0023D590 /* UIImageView.swift */; };
 		15C67177271F531C0023D590 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C67176271F531C0023D590 /* AlertModel.swift */; };
+		15C67179272095FA0023D590 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C67178272095FA0023D590 /* UIImage.swift */; };
 		15DAA4EE271B38B000EB5B80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */; };
 		15DAA4F0271B38B000EB5B80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */; };
 		15DAA4F2271B38B000EB5B80 /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */; };
@@ -44,6 +45,7 @@
 		15C6716F271F21DA0023D590 /* VenueCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueCellViewModel.swift; sourceTree = "<group>"; };
 		15C67174271F4F8D0023D590 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		15C67176271F531C0023D590 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		15C67178272095FA0023D590 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		15DAA4EA271B38B000EB5B80 /* Hungrity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hungrity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DAA4ED271B38B000EB5B80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15DAA4EF271B38B000EB5B80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				15C67174271F4F8D0023D590 /* UIImageView.swift */,
+				15C67178272095FA0023D590 /* UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -173,7 +176,6 @@
 		15DAA502271B3A6500EB5B80 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				15E7A53C271D76BB00E64239 /* _shared */,
 				15DAA504271B3C2C00EB5B80 /* Venues */,
 			);
 			path = Modules;
@@ -198,13 +200,6 @@
 				15DAA4F1271B38B000EB5B80 /* VenuesViewController.swift */,
 			);
 			path = Venues;
-			sourceTree = "<group>";
-		};
-		15E7A53C271D76BB00E64239 /* _shared */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = _shared;
 			sourceTree = "<group>";
 		};
 		15E7A53D271D76CF00E64239 /* Protocols */ = {
@@ -295,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15E7A53F271D76DF00E64239 /* Dependencies.swift in Sources */,
+				15C67179272095FA0023D590 /* UIImage.swift in Sources */,
 				15C67175271F4F8D0023D590 /* UIImageView.swift in Sources */,
 				15C67170271F21DA0023D590 /* VenueCellViewModel.swift in Sources */,
 				1529D00F271B45CB0080DE70 /* VenuesService.swift in Sources */,
